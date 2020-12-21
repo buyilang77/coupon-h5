@@ -7,7 +7,7 @@ import MultipleProduct from './components/MultipleProduct'
 import { fetchCoupon } from '@/api/index'
 import { fetchMerchant } from '@/api/information'
 export default {
-  name: 'Index',
+  name: 'Coupon',
   components: {
     SingleProduct,
     MultipleProduct
@@ -24,7 +24,6 @@ export default {
     this.coupon_id = this.$route.params.id
     this.getCoupon(this.coupon_id)
     fetchMerchant(this.coupon_id).then(response => {
-      console.log(response.data)
       this.contact = response.data.phone
     })
   },

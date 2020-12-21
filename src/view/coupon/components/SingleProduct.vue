@@ -41,7 +41,7 @@
     <van-goods-action>
       <van-goods-action-icon icon="home-o">首页</van-goods-action-icon>
       <van-goods-action-icon icon="service-o" @click="callPhone">客服</van-goods-action-icon>
-      <van-goods-action-button type="danger" to="/form">现在提货</van-goods-action-button>
+      <van-goods-action-button type="danger" @click="redirectToForm">现在提货</van-goods-action-button>
     </van-goods-action>
   </div>
 </template>
@@ -96,6 +96,9 @@ export default {
   methods: {
     callPhone() {
       window.location.href = 'tel://' + this.contact
+    },
+    redirectToForm() {
+      this.$router.push({ name: 'Form', params: { id: this.coupons.id }})
     }
   }
 }

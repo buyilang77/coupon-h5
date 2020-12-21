@@ -8,7 +8,7 @@
         <van-field v-model="postForm.consignee" name="收货人" label="收货人" placeholder="请填写收货人" :rules="[{ required: true }]" />
         <van-field v-model="postForm.phone" name="手机号" label="手机号" placeholder="请填写手机号" :rules="[{ required: true }]" />
         <van-cell is-link @click="showPopup">
-          <van-col span="8">选择地区</van-col>
+          <van-col span="7">选择地区</van-col>
           <van-col>{{ formatRegion() }}</van-col>
         </van-cell>
         <van-popup v-model="show" round position="bottom">
@@ -29,6 +29,7 @@ import { regionList } from '@/vendor/Area'
 import { createOrder } from '@/api/order'
 import { Area, Button, Cell, Col, Field, Form, Popup, Toast } from 'vant'
 const defaultForm = {
+  coupon_id: null,
   code: '',
   consignee: '',
   phone: '',
@@ -60,6 +61,7 @@ export default {
   },
   created() {
     this.areaList = regionList()
+    this.postForm.coupon_id = this.$route.params.id
     const products = JSON.parse(localStorage.getItem('products'))
     this.postForm.products.push(products.id)
   },
@@ -70,7 +72,7 @@ export default {
       })
       createOrder(this.postForm).then(response => {
         Toast.success(response.message)
-        this.$router.push('/index')
+        this.$router.go(-1)
       })
     },
     showPopup() {

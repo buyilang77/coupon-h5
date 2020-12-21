@@ -12,7 +12,7 @@ module.exports = {
         target: process.env.VUE_APP_DOMAIN,
         changeOrigin: true,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: 'front-end'
+          ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
     }

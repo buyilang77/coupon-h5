@@ -5,16 +5,16 @@ Vue.use(Router)
 
 const routes = [
   {
-    path: '/index/:id(\\d+)',
-    name: 'Index',
-    component: () => import('./view/index'),
+    path: '/coupons/:id(\\d+)',
+    name: 'Coupon',
+    component: () => import('./view/coupon'),
     meta: {
       title: '领取礼品'
     }
   },
   {
-    path: '/form',
-    name: 'From',
+    path: '/form/:id',
+    name: 'Form',
     component: () => import('./view/form'),
     meta: {
       title: '现在提货'

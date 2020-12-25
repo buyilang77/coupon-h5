@@ -13,7 +13,7 @@ const routes = [
     }
   },
   {
-    path: '/form/:id',
+    path: '/form',
     name: 'Form',
     component: () => import('./view/form'),
     meta: {

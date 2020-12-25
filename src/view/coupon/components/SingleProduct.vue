@@ -60,7 +60,7 @@ import {
   GoodsActionButton
 } from 'vant'
 export default {
-  name: 'Signal',
+  name: 'SingleProduct',
   components: {
     [Tag.name]: Tag,
     [Col.name]: Col,
@@ -90,15 +90,18 @@ export default {
       product: this.coupons.products[0] ?? null
     }
   },
-  created() {
-    localStorage.setItem('products', JSON.stringify(this.product))
-  },
   methods: {
     callPhone() {
       window.location.href = 'tel://' + this.contact
     },
     redirectToForm() {
-      this.$router.push({ name: 'Form', params: { id: this.coupons.id }})
+      this.$router.push({
+        name: 'Form', params: { id: this.coupons.id },
+        query: {
+          coupon_id: JSON.stringify(this.coupons.id),
+          products: JSON.stringify([this.product.id])
+        }
+      })
     }
   }
 }

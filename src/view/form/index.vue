@@ -28,6 +28,7 @@
 import { regionList } from '@/vendor/Area'
 import { createOrder } from '@/api/order'
 import { Area, Button, Cell, Col, Field, Form, Popup, Toast } from 'vant'
+
 const defaultForm = {
   coupon_id: null,
   code: '',
@@ -61,9 +62,8 @@ export default {
   },
   created() {
     this.areaList = regionList()
-    this.postForm.coupon_id = this.$route.params.id
-    const products = JSON.parse(localStorage.getItem('products'))
-    this.postForm.products.push(products.id)
+    this.postForm.coupon_id = JSON.parse(this.$route.query.coupon_id || '')
+    this.postForm.products = JSON.parse(this.$route.query.products || '[]')
   },
   methods: {
     onSubmit() {

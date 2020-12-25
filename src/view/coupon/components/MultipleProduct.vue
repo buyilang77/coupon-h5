@@ -11,7 +11,7 @@
       </van-cell>
       <van-cell>
         <van-col span="5">客服电话</van-col>
-        <van-col class="detail" span="16">{{ contact }}</van-col>
+        <van-col class="detail" span="16" @click="callPhone(coupons.services_phone)">{{ coupons.services_phone }}</van-col>
       </van-cell>
       <van-cell>
         <van-col span="5">活动说明</van-col>
@@ -45,7 +45,7 @@
     </van-cell-group>
     <van-goods-action>
       <van-goods-action-icon icon="home-o">首页</van-goods-action-icon>
-      <van-goods-action-icon icon="service-o" @click="callPhone">客服</van-goods-action-icon>
+      <van-goods-action-icon icon="service-o" @click="callPhone(contact)">客服</van-goods-action-icon>
       <van-goods-action-button type="danger" @click="redirectToForm">现在提货</van-goods-action-button>
     </van-goods-action>
   </div>
@@ -103,8 +103,8 @@ export default {
     }
   },
   methods: {
-    callPhone() {
-      window.location.href = 'tel://' + this.contact
+    callPhone(number) {
+      window.location.href = 'tel://' + number
     },
     redirectToForm() {
       this.$router.push({

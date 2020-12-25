@@ -23,7 +23,7 @@
       <van-cell><van-col span="5">可选礼品</van-col></van-cell>
 
       <van-cell v-for="(item,index) in product" :key="index" @click="toggle(index)">
-        <van-card :title="item.name" :desc="item.name" :price="item.price + '元'" :thumb="item.carousel && item.carousel[0].url" />
+        <van-card :title="item.name" :desc="item.name" :price="item.price + '元'" :thumb="thumbnailImage(item.carousel)" />
         <template #right-icon>
           <van-checkbox ref="checkboxes" checked-color="#FF0000" :name="item.id">选择</van-checkbox>
         </template>
@@ -114,6 +114,13 @@ export default {
           products: JSON.stringify(this.checkedProducts)
         }
       })
+    },
+    thumbnailImage(image) {
+      let url = 'http://xxx.com'
+      if (image !== undefined && image.length > 0) {
+        url = image[0].url
+      }
+      return url
     },
     toggle(index) {
       const is_checked = this.$refs.checkboxes[index].checked

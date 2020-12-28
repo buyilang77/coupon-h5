@@ -11,7 +11,7 @@
       </van-cell>
       <van-cell>
         <van-col span="5">客服电话</van-col>
-        <van-col class="detail" span="16" @click="callPhone(coupons.services_phone)">{{ coupons.services_phone }}</van-col>
+        <van-col class="detail" span="16" @click="callPhone(coupons.services_phone)">{{ coupons.services_phone || contact }}</van-col>
       </van-cell>
       <van-cell>
         <van-col span="5">活动说明</van-col>

@@ -19,17 +19,15 @@
       </van-cell>
     </van-cell-group>
 
-    <van-checkbox-group v-model="checkedProducts" direction="horizontal" icon-size="15px">
+    <van-radio-group v-model="checkedProduct" icon-size="15px">
       <van-cell><van-col span="5">可选礼品</van-col></van-cell>
-
-      <van-cell v-for="(item,index) in product" :key="index" @click="toggle(index)">
+      <van-cell v-for="(item,index) in product" :key="index">
         <van-card :title="item.name" :desc="item.name" :price="item.price + '元'" :thumb="thumbnailImage(item.carousel)" />
         <template #right-icon>
-          <van-checkbox ref="checkboxes" checked-color="#FF0000" :name="item.id">选择</van-checkbox>
+          <van-radio ref="checkboxes" checked-color="#FF0000" :name="item.id" />
         </template>
       </van-cell>
-
-    </van-checkbox-group>
+    </van-radio-group>
 
     <van-cell-group>
       <van-cell>
@@ -65,7 +63,10 @@ import {
   GoodsActionButton,
   Card,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  RadioGroup,
+  Radio,
+  Toast
 } from 'vant'
 export default {
   name: 'MultipleProduct',
@@ -83,7 +84,10 @@ export default {
     [GoodsActionButton.name]: GoodsActionButton,
     [Card.name]: Card,
     [Checkbox.name]: Checkbox,
-    [CheckboxGroup.name]: CheckboxGroup
+    [RadioGroup.name]: RadioGroup,
+    [Radio.name]: Radio,
+    [CheckboxGroup.name]: CheckboxGroup,
+    [Toast.name]: Toast
   },
   props: {
     coupons: {
@@ -97,7 +101,7 @@ export default {
   },
   data() {
     return {
-      checkedProducts: [],
+      checkedProduct: null,
       total_shipments: this.coupons.total_shipments,
       product: this.coupons.products
     }
@@ -107,11 +111,15 @@ export default {
       window.location.href = 'tel://' + number
     },
     redirectToForm() {
+      if (!this.checkedProduct) {
+        Toast.fail('你还没有选择礼品~')
+        return
+      }
       this.$router.push({
         name: 'Form', params: { id: this.coupons.id },
         query: {
-          coupon_id: JSON.stringify(this.coupons.id),
-          products: JSON.stringify(this.checkedProducts)
+          coupon_id: this.coupons.id,
+          product_id: this.checkedProduct
         }
       })
     },
@@ -121,10 +129,6 @@ export default {
         url = image[0].url
       }
       return url
-    },
-    toggle(index) {
-      const is_checked = this.$refs.checkboxes[index].checked
-      this.$refs.checkboxes[index].$el.getElementsByTagName('span')[0].innerText = is_checked ? '选择' : '已选择'
     }
   }
 }

@@ -31,13 +31,13 @@ import { Area, Button, Cell, Col, Field, Form, Popup, Toast } from 'vant'
 
 const defaultForm = {
   coupon_id: null,
-  code: '',
-  consignee: '',
-  phone: '',
+  code: null,
+  consignee: null,
+  phone: null,
   region: [],
-  products: [],
-  address: '',
-  password: ''
+  product_id: null,
+  address: null,
+  password: null
 }
 export default {
   name: 'From',
@@ -62,8 +62,8 @@ export default {
   },
   created() {
     this.areaList = regionList()
-    this.postForm.coupon_id = JSON.parse(this.$route.query.coupon_id || '')
-    this.postForm.products = JSON.parse(this.$route.query.products || '[]')
+    this.postForm.coupon_id = this.$route.query.coupon_id
+    this.postForm.product_id = this.$route.query.product_id
   },
   methods: {
     onSubmit() {

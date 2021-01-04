@@ -98,8 +98,8 @@ export default {
       this.$router.push({
         name: 'Form', params: { id: this.coupons.id },
         query: {
-          coupon_id: JSON.stringify(this.coupons.id),
-          products: JSON.stringify([this.product.id])
+          coupon_id: this.coupons.id,
+          product_id: this.product.id
         }
       })
     }

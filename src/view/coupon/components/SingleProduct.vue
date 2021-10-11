@@ -95,52 +95,57 @@ export default {
 </script>
 
 <style lang="less">
+@media only screen and (min-width: 1230px) {
   .goods {
-        padding-bottom: 50px;
-
-        &-swipe {
-            img {
-                width: 100%;
-                display: block;
-            }
-        }
-
-        &-title {
-            font-weight: bold;
-        }
-
-        &-price {
-            color: #f44;
-            font-size: 18px;
-            text-decoration:line-through;
-        }
-
-        &-express {
-            color: #999;
-            font-size: 12px;
-            padding: 5px 15px;
-        }
-
-        &-cell-group {
-            margin: 15px 0;
-
-            .van-cell__value {
-                color: #999;
-            }
-        }
-
-        &-tag {
-            margin-left: 5px;
-        }
-    }
-  .description {
-    padding: 0 16px 10px 16px;
-    img {
-      width: 100%;
-      height: auto;
-    }
+    width:750px;
   }
-  .notice {
-    font-size: 13px;
+}
+.goods {
+      padding-bottom: 50px;
+
+      &-swipe {
+          img {
+              width: 100%;
+              display: block;
+          }
+      }
+
+      &-title {
+          font-weight: bold;
+      }
+
+      &-price {
+          color: #f44;
+          font-size: 18px;
+          text-decoration:line-through;
+      }
+
+      &-express {
+          color: #999;
+          font-size: 12px;
+          padding: 5px 15px;
+      }
+
+      &-cell-group {
+          margin: 15px 0;
+
+          .van-cell__value {
+              color: #999;
+          }
+      }
+
+      &-tag {
+          margin-left: 5px;
+      }
   }
+.description {
+  padding: 0 16px 10px 16px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+.notice {
+  font-size: 13px;
+}
 </style>

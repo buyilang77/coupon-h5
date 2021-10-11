@@ -123,6 +123,11 @@ export default {
 </script>
 
 <style lang="less">
+@media only screen and (min-width: 1230px) {
+  .goods {
+    width:750px;
+  }
+}
 .goods {
   padding-bottom: 50px;
   &-cell-group {

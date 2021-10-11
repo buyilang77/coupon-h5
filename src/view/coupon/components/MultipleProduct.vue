@@ -29,18 +29,6 @@
       </van-cell>
     </van-radio-group>
 
-    <van-cell-group>
-      <van-cell>
-        <h4 class="text-center">兑换须知</h4>
-        <div class="notice">
-          <p>1.提货卡上印制的提货码及密码，为唯一提货标识，提货密码为一次性使用，请在未提货前勿将涂层刮开。</p>
-          <p>2.提货卡不兑现、不找零、遗失不补，敬请妥善保管。</p>
-          <p>3.购卡时已经开具发票，提货时不提供发票。</p>
-          <p>4.提货卡请在有效期内使用，逾期无法保证指定商品兑换有效性。</p>
-          <p>5.全国大部分地区免费配送，新疆、西藏、内蒙古、青海、海南、宁夏、甘肃、香港、澳门、台湾等区域请联系商家确定是否配送。</p>
-        </div>
-      </van-cell>
-    </van-cell-group>
     <van-goods-action>
       <van-goods-action-icon icon="home-o">首页</van-goods-action-icon>
       <van-goods-action-icon icon="service-o" @click="callPhone(contact)">客服</van-goods-action-icon>

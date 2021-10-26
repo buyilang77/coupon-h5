@@ -35,11 +35,7 @@ export default {
       })
     },
     switchComponent() {
-      if (this.coupons.products.length === 1) {
-        this.product_component = 'SingleProduct'
-      } else {
-        this.product_component = 'MultipleProduct'
-      }
+      this.product_component = 'MultipleProduct'
     }
   }
 }

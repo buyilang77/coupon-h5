@@ -13,6 +13,14 @@ const routes = [
     }
   },
   {
+    path: '/coupons/:id(\\d+)/select-product',
+    name: 'SelectProduct',
+    component: () => import('./view/select'),
+    meta: {
+      title: '选择礼品'
+    }
+  },
+  {
     path: '/form',
     name: 'Form',
     component: () => import('./view/form'),

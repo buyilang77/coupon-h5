@@ -15,6 +15,10 @@
           <van-area :value="area" :area-list="areaList" name="选择城市" @change="onChange" @confirm="onConfirm" @cancel="onCancel" />
         </van-popup>
         <van-field v-model="postForm.address" name="收货地址" label="收货地址" placeholder="收货地址" :rules="[{ required: true }]" />
+        <div class="remark">
+          <h5>备注</h5>
+          <van-field v-model="postForm.remark" name="用户名" placeholder="" type="textarea" maxlength="50" show-word-limit />
+        </div>
       </div>
       <div class="mt-1">
         <van-button round block type="info" native-type="submit">
@@ -37,6 +41,7 @@ const defaultForm = {
   region: [],
   product_id: null,
   address: null,
+  remark: null,
   password: null
 }
 export default {

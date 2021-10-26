@@ -1,5 +1,10 @@
 <template>
   <div class="goods">
+    <van-swipe class="goods-swipe" :autoplay="3000">
+      <van-swipe-item v-for="(item,index) in product[0].carousel" :key="index">
+        <img :src="item.url" alt="">
+      </van-swipe-item>
+    </van-swipe>
     <van-cell-group>
       <van-cell>
         <van-col span="5">活动名称</van-col>
@@ -13,21 +18,12 @@
         <van-col span="5">客服电话</van-col>
         <van-col class="detail" span="16" @click="callPhone(coupons.services_phone)">{{ coupons.services_phone || contact }}</van-col>
       </van-cell>
-      <van-cell>
-        <van-col span="5">活动说明</van-col>
-        <van-col class="detail" span="16">{{ coupons.activity_description }}</van-col>
-      </van-cell>
     </van-cell-group>
 
-    <van-radio-group v-model="checkedProduct" icon-size="15px">
-      <van-cell><van-col span="5">可选礼品</van-col></van-cell>
-      <van-cell v-for="(item,index) in product" :key="index">
-        <van-card :title="item.name" :desc="item.name" :price="item.price + '元'" :thumb="thumbnailImage(item.carousel)" />
-        <template #right-icon>
-          <van-radio ref="checkboxes" checked-color="#FF0000" :name="item.id" />
-        </template>
-      </van-cell>
-    </van-radio-group>
+    <van-cell-group class="goods-cell-group">
+      <van-cell title="活动说明" />
+      <div class="description" v-html="coupons.activity_description" />
+    </van-cell-group>
 
     <van-goods-action>
       <van-goods-action-icon icon="home-o">首页</van-goods-action-icon>
@@ -99,17 +95,7 @@ export default {
       window.location.href = 'tel://' + number
     },
     redirectToForm() {
-      if (!this.checkedProduct) {
-        Toast.fail('你还没有选择礼品~')
-        return
-      }
-      this.$router.push({
-        name: 'Form', params: { id: this.coupons.id },
-        query: {
-          coupon_id: this.coupons.id,
-          product_id: this.checkedProduct
-        }
-      })
+      this.$router.push({ name: 'SelectProduct', params: { id: this.coupons.id }})
     },
     thumbnailImage(image) {
       let url = 'http://xxx.com'

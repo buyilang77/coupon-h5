@@ -9,7 +9,7 @@ const routes = [
     name: 'Coupon',
     component: () => import('./view/coupon'),
     meta: {
-      title: '领取礼品'
+      title: '提货'
     }
   },
   {

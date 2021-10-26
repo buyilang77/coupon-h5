@@ -117,7 +117,6 @@ export default {
       &-price {
           color: #f44;
           font-size: 18px;
-          text-decoration:line-through;
       }
 
       &-express {

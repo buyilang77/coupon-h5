@@ -1,112 +1,122 @@
 <template>
   <div class="container">
-    <h4 class="text-center">填写提货信息</h4>
-    <van-form @submit="onSubmit">
-      <van-field v-model="postForm.code" name="用户名" placeholder="请填写卡号" :rules="[{ required: true }]" />
-      <van-field v-model="postForm.password" name="密码" placeholder="请填写提货密码" :rules="[{ required: true }]" />
-      <div class="mt-1">
-        <van-field v-model="postForm.consignee" name="收货人" label="收货人" placeholder="请填写收货人" :rules="[{ required: true }]" />
-        <van-field v-model="postForm.phone" name="手机号" label="手机号" placeholder="请填写手机号" :rules="[{ required: true }]" />
-        <van-cell is-link @click="showPopup">
-          <van-col span="7">选择地区</van-col>
-          <van-col>{{ formatRegion() }}</van-col>
-        </van-cell>
-        <van-popup v-model="show" round position="bottom">
-          <van-area :value="area" :area-list="areaList" name="选择城市" @change="onChange" @confirm="onConfirm" @cancel="onCancel" />
-        </van-popup>
-        <van-field v-model="postForm.address" name="收货地址" label="收货地址" placeholder="收货地址" :rules="[{ required: true }]" />
-        <div class="remark">
-          <h5>备注</h5>
-          <van-field v-model="postForm.remark" name="用户名" placeholder="" type="textarea" maxlength="50" show-word-limit />
-        </div>
+    <div class="coupon-item">
+      <div class="coupon-item-image">
+        <van-image
+          fit="contain"
+          :src="thumbnailImage(coupons.products && coupons.products[0].carousel)"
+          :alt="coupons.title"
+        />
       </div>
-      <div class="mt-1">
-        <van-button round block type="info" native-type="submit">
-          提交
-        </van-button>
+      <div class="coupon-item-info">
+        <p class="coupon-item-info-title">{{ coupons.title }}</p>
+        <p>¥ <span>{{ coupons.products && coupons.products[0].price }}</span></p>
       </div>
-    </van-form>
+    </div>
+    <div class="tap">
+      <div class="tap-item" :class="{ active: 1 === isActive }" @click="selectDelivery(1)"><a>快递配送</a></div>
+      <div class="tap-item" :class="{ active: 2 === isActive }" @click="selectDelivery(2)"><a>门店自提</a></div>
+    </div>
+    <div class="mt-1">
+      <component :is="formComponent" :coupons="coupons" />
+    </div>
   </div>
 </template>
 <script>
-import { regionList } from '@/vendor/Area'
-import { createOrder } from '@/api/order'
-import { Area, Button, Cell, Col, Field, Form, Popup, Toast } from 'vant'
-
-const defaultForm = {
-  coupon_id: null,
-  code: null,
-  consignee: null,
-  phone: null,
-  region: [],
-  product_id: null,
-  address: null,
-  remark: null,
-  password: null
-}
+import { Image as VanImage } from 'vant'
+import { fetchCoupon } from '@/api/index'
+import ExpressDelivery from './components/ExpressDelivery'
+import SelfCollection from './components/SelfCollection'
 export default {
   name: 'From',
   components: {
-    [Cell.name]: Cell,
-    [Form.name]: Form,
-    [Col.name]: Col,
-    [Field.name]: Field,
-    [Button.name]: Button,
-    [Popup.name]: Popup,
-    [Toast.name]: Toast,
-    [Area.name]: Area
+    [VanImage.name]: VanImage,
+    ExpressDelivery,
+    SelfCollection
   },
   data() {
     return {
-      postForm: Object.assign({}, defaultForm),
-      show: false,
-      tempRegion: [],
-      area: '',
-      areaList: {}
+      isActive: 1,
+      formComponent: 'ExpressDelivery',
+      coupons: {}
     }
   },
   created() {
-    this.areaList = regionList()
-    this.postForm.coupon_id = this.$route.query.coupon_id
-    this.postForm.product_id = this.$route.query.product_id
+    this.getCoupon(this.$route.query.coupon_id)
   },
   methods: {
-    onSubmit() {
-      this.postForm.region = this.tempRegion.map((item) => {
-        return item.code
-      })
-      createOrder(this.postForm).then(response => {
-        Toast.success(response.message)
-        this.$router.go(-1)
-      })
-    },
-    showPopup() {
-      this.show = true
-    },
-    onChange(picker, value) {
-      this.tempRegion = value
-    },
-    onConfirm() {
-      this.show = false
-    },
-    onCancel() {
-      this.show = false
-    },
-    formatRegion() {
-      if (this.tempRegion.length <= 0) {
-        return
+    selectDelivery(item) {
+      switch (item) {
+        case 1:
+          this.formComponent = 'ExpressDelivery'
+          break
+        case 2:
+          this.formComponent = 'SelfCollection'
+          break
       }
-      const region = this.tempRegion.map((item) => {
-        return item.name
+      this.isActive = item
+    },
+    getCoupon(id) {
+      fetchCoupon(id).then(response => {
+        this.coupons = response.data
       })
-      return region.join(' / ')
+    },
+    thumbnailImage(image) {
+      let url = 'http://xxx.com'
+      if (image !== undefined && image.length > 0) {
+        url = image[0].url
+      }
+      return url
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .container {
     margin: 1rem;
+    .coupon-item {
+      display: flex;
+      align-content: center;
+      background-color: #ffffff;
+      //border-radius: 10px;
+      font-size: 10pt;
+      padding: 13px 8px 16px;
+
+      &-image {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        width: 100px;
+      }
+      &-info {
+        p {
+          margin: 0 0 5px;
+        }
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-content: center;
+        padding-left: 8px;
+        &-title {
+          font-weight: bold;
+          font-size: 11pt;
+        }
+      }
+    }
+    .tap {
+      display: flex;
+      background-color: #ffffff;
+      padding-left: 10px;
+      &-item {
+        padding: 10px 0;
+        &:first-child {
+          margin-right: 24px;
+        }
+      }
+    }
+  }
+  .active {
+    border-bottom: 3px solid #ff0000;
   }
 </style>

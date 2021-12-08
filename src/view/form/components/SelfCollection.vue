@@ -9,6 +9,7 @@
           name="picker"
           left-icon="location-o"
           :value="store"
+          :rules="[{ required: true }]"
           placeholder="点击选择门店"
           @click="showPickerStore = true"
         />
@@ -60,6 +61,7 @@
 import { Area, Button, Cell, Col, Field, Form, Image as VanImage, Popup, Tab, Tabs, Icon, Toast, Picker, DatetimePicker } from 'vant'
 import { createOrder } from '@/api/order'
 import dayjs from 'dayjs'
+import { CodeToText } from 'element-china-area-data/dist/app'
 const defaultForm = {
   store_id: null,
   coupon_id: null,
@@ -100,6 +102,7 @@ export default {
   },
   data() {
     return {
+      CodeToText,
       showPickerStore: false,
       minDate: new Date(),
       show: false,
@@ -112,7 +115,6 @@ export default {
   created() {
     this.postForm.coupon_id = this.$route.query.coupon_id
     this.postForm.product_id = this.$route.query.product_id
-    console.log(this.coupons)
     this.stores = this.coupons.stores
   },
   methods: {
@@ -127,7 +129,8 @@ export default {
       this.showPicker = false
     },
     onConfirmStore(value, index) {
-      this.store = value
+      const currentStore = this.coupons.stores[index].region
+      this.store = CodeToText[currentStore[0]] + CodeToText[currentStore[1]] + CodeToText[currentStore[2]] + ',' + this.coupons.stores[index].address
       this.postForm.store_id = this.coupons.stores[index].id
       this.showPickerStore = false
     }

@@ -15,7 +15,7 @@
     </div>
     <div class="tap">
       <div class="tap-item" :class="{ active: 1 === isActive }" @click="selectDelivery(1)"><a>快递配送</a></div>
-      <div class="tap-item" :class="{ active: 2 === isActive }" @click="selectDelivery(2)"><a>门店自提</a></div>
+      <div v-if="Object.keys(coupons.stores).length" class="tap-item" :class="{ active: 2 === isActive }" @click="selectDelivery(2)"><a>门店自提</a></div>
     </div>
     <div class="mt-1">
       <component :is="formComponent" :coupons="coupons" />
@@ -38,7 +38,9 @@ export default {
     return {
       isActive: 1,
       formComponent: 'ExpressDelivery',
-      coupons: {}
+      coupons: {
+        stores: []
+      }
     }
   },
   created() {

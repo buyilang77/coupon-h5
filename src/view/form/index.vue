@@ -13,9 +13,8 @@
         <p>¥ <span>{{ coupons.products && coupons.products[0].price }}</span></p>
       </div>
     </div>
-    <div class="tap">
-      <div class="tap-item" :class="{ active: 1 === isActive }" @click="selectDelivery(1)"><a>快递配送</a></div>
-      <div v-if="Object.keys(coupons.stores).length" class="tap-item" :class="{ active: 2 === isActive }" @click="selectDelivery(2)"><a>门店自提</a></div>
+    <div class="tap mt-1">
+      <div v-for="(type, index) in coupons.delivery_type" :key="index" class="tap-item" :class="{ active: isActive === index }" @click="selectDelivery(type, index)"><a>{{ type | deliveryType }}</a></div>
     </div>
     <div class="mt-1">
       <component :is="formComponent" :coupons="coupons" />
@@ -34,9 +33,18 @@ export default {
     ExpressDelivery,
     SelfCollection
   },
+  filters: {
+    deliveryType(status) {
+      const statusMap = {
+        'delivery': '快递发货',
+        'pick_up': '门店自提'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
-      isActive: 1,
+      isActive: 0,
       formComponent: 'ExpressDelivery',
       coupons: {
         stores: []
@@ -47,16 +55,16 @@ export default {
     this.getCoupon(this.$route.query.coupon_id)
   },
   methods: {
-    selectDelivery(item) {
+    selectDelivery(item, index) {
       switch (item) {
-        case 1:
+        case 'delivery':
           this.formComponent = 'ExpressDelivery'
           break
-        case 2:
+        case 'pick_up':
           this.formComponent = 'SelfCollection'
           break
       }
-      this.isActive = item
+      this.isActive = index
     },
     getCoupon(id) {
       fetchCoupon(id).then(response => {

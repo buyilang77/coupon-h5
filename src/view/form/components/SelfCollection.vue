@@ -3,6 +3,7 @@
     <van-form @submit="onSubmit">
       <div class="mt-1">
         <h4 class="form-info">可提货门店</h4>
+        <h5 v-if="postForm.store_id" class="store-title">{{ currentStore().name }}</h5>
         <van-field
           readonly
           clickable
@@ -22,12 +23,14 @@
             @cancel="showPickerStore = false"
           />
         </van-popup>
+        <van-cell v-if="postForm.store_id" :title="currentStore().phone + ' (' + currentStore().contact + ')'" icon="phone-o" :url="'tel:' + currentStore().phone" />
       </div>
       <div class="mt-1">
         <h4 class="form-info">填写信息</h4>
         <van-field v-model="postForm.code" name="卡号" label="卡号" placeholder="请填写卡号" :rules="[{ required: true }]" />
         <van-field v-model="postForm.password" name="密码" label="密码" placeholder="请填写提货密码" :rules="[{ required: true }]" />
         <van-field v-model="postForm.consignee" name="提货人" label="收货人" placeholder="请填写提货人" :rules="[{ required: true }]" />
+        <van-field v-model="postForm.phone" name="手机号" label="手机号" placeholder="请填写手机号" :rules="[{ required: true }]" />
         <van-field
           readonly
           clickable
@@ -46,7 +49,6 @@
             @cancel="showPicker = false"
           />
         </van-popup>
-        <van-field v-model="postForm.phone" name="手机号" label="手机号" placeholder="请填写手机号" :rules="[{ required: true }]" />
       </div>
       <div class="mt-1">
         <van-button round block type="info" native-type="submit">
@@ -133,6 +135,11 @@ export default {
       this.store = CodeToText[currentStore[0]] + CodeToText[currentStore[1]] + CodeToText[currentStore[2]] + ',' + this.coupons.stores[index].address
       this.postForm.store_id = this.coupons.stores[index].id
       this.showPickerStore = false
+    },
+    currentStore() {
+      return this.stores.find((item) => {
+        return item.id === this.postForm.store_id
+      })
     }
   }
 }
@@ -148,5 +155,10 @@ export default {
 .store {
   background-color: #FFFFFF;
   padding: 10px 13px;
+}
+.store-title {
+  margin: 0;
+  padding: 10px 16px 0;
+  background-color: #FFFFFF;
 }
 </style>

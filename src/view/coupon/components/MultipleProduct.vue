@@ -33,7 +33,7 @@
       </van-cell>
       <van-cell>
         <van-col span="7">客服电话</van-col>
-        <van-col class="detail" span="16" @click="callPhone(coupons.services_phone)">{{ coupons.services_phone || contact }}</van-col>
+        <van-col class="detail" span="16" @click="callPhone(coupons.services_phone || contact)">{{ coupons.services_phone || contact }}</van-col>
       </van-cell>
     </van-cell-group>
 
@@ -138,8 +138,9 @@ export default {
     }
   },
   methods: {
-    callPhone(number) {
-      window.location.href = 'tel://' + number
+    callPhone(phone) {
+      console.log(phone)
+      window.location.href = 'tel://' + phone
     },
     redirectToForm() {
       this.$router.push({ name: 'SelectProduct', params: { id: this.coupons.id }, query: { card_num: this.card_num }})

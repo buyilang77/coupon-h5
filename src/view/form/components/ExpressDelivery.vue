@@ -19,7 +19,7 @@
           <van-field v-model="postForm.remark" name="用户名" placeholder="" type="textarea" maxlength="50" show-word-limit />
         </div>
       </div>
-      <div class="mt-1">
+      <div class="mt-1 submit-btn">
         <van-button round block type="info" native-type="submit">
           提交
         </van-button>
@@ -73,6 +73,9 @@ export default {
     this.areaList = regionList()
     this.postForm.coupon_id = this.$route.query.coupon_id
     this.postForm.product_id = this.$route.query.product_id
+    if (this.$route.query.card_num) {
+      this.postForm.code = this.$route.query.card_num
+    }
   },
   methods: {
     onSubmit() {
@@ -113,6 +116,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

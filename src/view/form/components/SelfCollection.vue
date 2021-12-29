@@ -50,7 +50,7 @@
           />
         </van-popup>
       </div>
-      <div class="mt-1">
+      <div class="mt-1 submit-btn">
         <van-button round block type="info" native-type="submit">
           提交
         </van-button>
@@ -118,6 +118,9 @@ export default {
     this.postForm.coupon_id = this.$route.query.coupon_id
     this.postForm.product_id = this.$route.query.product_id
     this.stores = this.coupons.stores
+    if (this.$route.query.card_num) {
+      this.postForm.code = this.$route.query.card_num
+    }
   },
   methods: {
     onSubmit() {

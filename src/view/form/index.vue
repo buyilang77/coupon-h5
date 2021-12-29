@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       isActive: 0,
-      formComponent: 'ExpressDelivery',
+      formComponent: '',
       coupons: {
         stores: []
       }
@@ -69,6 +69,14 @@ export default {
     getCoupon(id) {
       fetchCoupon(id).then(response => {
         this.coupons = response.data
+        switch (this.coupons.delivery_type[0]) {
+          case 'delivery':
+            this.formComponent = 'ExpressDelivery'
+            break
+          case 'pick_up':
+            this.formComponent = 'SelfCollection'
+            break
+        }
       })
     },
     thumbnailImage(image) {

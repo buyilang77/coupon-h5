@@ -1,26 +1,43 @@
 <template>
   <div class="goods">
+    <div class="header-title text-center">礼品券卡信息</div>
     <van-swipe class="goods-swipe" :autoplay="3000">
       <van-swipe-item v-for="(item,index) in product[0].carousel" :key="index">
         <img :src="item.url" alt="">
       </van-swipe-item>
     </van-swipe>
     <van-cell-group>
+      <van-cell v-if="card_num">
+        <van-col span="7">提货编码</van-col>
+        <van-col class="detail" span="16">{{ card_num }}</van-col>
+      </van-cell>
       <van-cell>
-        <van-col span="5">活动名称</van-col>
+        <van-col span="7">活动名称</van-col>
         <van-col class="detail" span="16">{{ coupons.title }}</van-col>
       </van-cell>
-      <van-cell>
-        <van-col span="5">有效期</van-col>
-        <van-col class="detail" span="16">{{ coupons.start_time }} - {{ coupons.end_time }}</van-col>
+      <van-cell v-if="card_num">
+        <van-col span="7">券卡面值</van-col>
+        <van-col class="detail" span="16">{{ coupons.original_price }}</van-col>
+      </van-cell>
+      <van-cell v-if="card_num">
+        <van-col span="7">券卡状态</van-col>
+        <van-col class="detail" span="16">卡券为真, {{ coupon_item.open_status | openStatusFilter }}, {{ coupon_item.redemption_status | redemptionStatusFilter }}</van-col>
       </van-cell>
       <van-cell>
-        <van-col span="5">客服电话</van-col>
+        <van-col span="7">开始有效期</van-col>
+        <van-col class="detail" span="16">{{ coupons.start_time }}</van-col>
+      </van-cell>
+      <van-cell>
+        <van-col span="7">结束有效期</van-col>
+        <van-col class="detail" span="16">{{ coupons.end_time }}</van-col>
+      </van-cell>
+      <van-cell>
+        <van-col span="7">客服电话</van-col>
         <van-col class="detail" span="16" @click="callPhone(coupons.services_phone)">{{ coupons.services_phone || contact }}</van-col>
       </van-cell>
     </van-cell-group>
 
-    <van-cell-group class="goods-cell-group">
+    <van-cell-group v-if="coupons.activity_description" class="goods-cell-group">
       <van-cell title="活动说明" />
       <div class="description" v-html="coupons.activity_description" />
     </van-cell-group>
@@ -52,6 +69,7 @@ import {
   Radio,
   Toast
 } from 'vant'
+import { fetchCouponItem } from '@/api/index'
 export default {
   name: 'MultipleProduct',
   components: {
@@ -73,6 +91,22 @@ export default {
     [CheckboxGroup.name]: CheckboxGroup,
     [Toast.name]: Toast
   },
+  filters: {
+    openStatusFilter(status) {
+      const statusMap = {
+        0: '未开启',
+        1: '已开启'
+      }
+      return statusMap[status]
+    },
+    redemptionStatusFilter(status) {
+      const statusMap = {
+        0: '未兑换',
+        1: '已兑换'
+      }
+      return statusMap[status]
+    }
+  },
   props: {
     coupons: {
       type: Object,
@@ -85,9 +119,22 @@ export default {
   },
   data() {
     return {
+      coupon_item: {},
+      card_num: null,
       checkedProduct: null,
       total_shipments: this.coupons.total_shipments,
       product: this.coupons.products
+    }
+  },
+  created() {
+    this.card_num = this.$route.query.card_num
+    if (this.card_num) {
+      fetchCouponItem({
+        coupon_id: this.coupons.id,
+        code: this.card_num
+      }).then(res => {
+        this.coupon_item = res.data
+      })
     }
   },
   methods: {
@@ -95,7 +142,7 @@ export default {
       window.location.href = 'tel://' + number
     },
     redirectToForm() {
-      this.$router.push({ name: 'SelectProduct', params: { id: this.coupons.id }})
+      this.$router.push({ name: 'SelectProduct', params: { id: this.coupons.id }, query: { card_num: this.card_num }})
     },
     thumbnailImage(image) {
       let url = 'http://xxx.com'
@@ -115,6 +162,12 @@ export default {
   }
 }
 .goods {
+  .header-title {
+    padding: .6rem 0;
+    color: #FFFFFF;
+    font-size: 10pt;
+    background: linear-gradient(to right,#ff6034,#ee0a24);
+  }
   padding-bottom: 50px;
   &-cell-group {
     margin: 15px 0;

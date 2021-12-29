@@ -6,3 +6,10 @@ export function fetchCoupon(id) {
     method: 'get'
   })
 }
+export function fetchCouponItem(params) {
+  return request({
+    url: '/coupon-item',
+    method: 'get',
+    params
+  })
+}

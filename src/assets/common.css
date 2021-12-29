@@ -7,3 +7,9 @@
 .mt-1 {
     margin-top: 1rem;
 }
+.submit-btn button {
+    border: unset;
+    width: 200px;
+    margin: 0 auto;
+    background: linear-gradient(to right,#ff6034,#ee0a24);
+}

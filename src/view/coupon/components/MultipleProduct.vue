@@ -17,7 +17,7 @@
       </van-cell>
       <van-cell v-if="card_num">
         <van-col span="7">券卡面值</van-col>
-        <van-col class="detail" span="16">{{ coupons.original_price }}</van-col>
+        <van-col class="detail" span="16">{{ coupons.original_price }} 元</van-col>
       </van-cell>
       <van-cell v-if="card_num">
         <van-col span="7">券卡状态</van-col>
@@ -43,7 +43,6 @@
     </van-cell-group>
 
     <van-goods-action>
-      <van-goods-action-icon icon="home-o">首页</van-goods-action-icon>
       <van-goods-action-icon icon="service-o" @click="callPhone(contact)">客服</van-goods-action-icon>
       <van-goods-action-button type="danger" @click="redirectToForm">现在提货</van-goods-action-button>
     </van-goods-action>

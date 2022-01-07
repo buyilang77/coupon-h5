@@ -75,7 +75,8 @@ export default {
           query: {
             coupon_id: this.coupons.id,
             product_id: this.checkedProduct,
-            card_num: this.$route.query.card_num
+            card_num: this.$route.query.card_num,
+            password: this.$route.query.password
           }
         })
       } else {

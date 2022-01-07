@@ -5,6 +5,14 @@ Vue.use(Router)
 
 const routes = [
   {
+    path: '/:username',
+    name: 'SignIn',
+    component: () => import('./view/signIn/index'),
+    meta: {
+      title: '提货'
+    }
+  },
+  {
     path: '/coupons/:id(\\d+)',
     name: 'Coupon',
     component: () => import('./view/coupon'),
@@ -21,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: '/form',
+    path: '/coupons/form',
     name: 'Form',
     component: () => import('./view/form'),
     meta: {

@@ -76,6 +76,9 @@ export default {
     if (this.$route.query.card_num) {
       this.postForm.code = this.$route.query.card_num
     }
+    if (this.$route.query.password) {
+      this.postForm.password = this.$route.query.password
+    }
   },
   methods: {
     onSubmit() {

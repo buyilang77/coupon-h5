@@ -142,7 +142,10 @@ export default {
       window.location.href = 'tel://' + phone
     },
     redirectToForm() {
-      this.$router.push({ name: 'SelectProduct', params: { id: this.coupons.id }, query: { card_num: this.card_num }})
+      this.$router.push({ name: 'SelectProduct', params: { id: this.coupons.id }, query: {
+        card_num: this.card_num,
+        password: this.$route.query.password
+      }})
     },
     thumbnailImage(image) {
       let url = 'http://xxx.com'

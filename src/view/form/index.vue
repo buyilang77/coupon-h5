@@ -1,16 +1,16 @@
 <template>
   <div class="container">
-    <div class="coupon-item">
+    <div v-if="getProduct()" class="coupon-item">
       <div class="coupon-item-image">
         <van-image
           fit="contain"
-          :src="thumbnailImage(coupons.products && coupons.products[0].carousel)"
+          :src="thumbnailImage(getProduct().carousel)"
           :alt="coupons.title"
         />
       </div>
       <div class="coupon-item-info">
-        <p class="coupon-item-info-title">{{ coupons.title }}</p>
-        <p>¥ <span>{{ coupons.products && coupons.products[0].price }}</span></p>
+        <p class="coupon-item-info-title">{{ getProduct().name }}</p>
+        <p>¥ <span>{{ getProduct().price }}</span></p>
       </div>
     </div>
     <div class="tap mt-1">
@@ -26,6 +26,7 @@ import { Image as VanImage } from 'vant'
 import { fetchCoupon } from '@/api/index'
 import ExpressDelivery from './components/ExpressDelivery'
 import SelfCollection from './components/SelfCollection'
+
 export default {
   name: 'From',
   components: {
@@ -47,7 +48,8 @@ export default {
       isActive: 0,
       formComponent: '',
       coupons: {
-        stores: []
+        stores: [],
+        products: []
       }
     }
   },
@@ -77,6 +79,7 @@ export default {
             this.formComponent = 'SelfCollection'
             break
         }
+        this.getProduct()
       })
     },
     thumbnailImage(image) {
@@ -85,6 +88,11 @@ export default {
         url = image[0].url
       }
       return url
+    },
+    getProduct() {
+      return this.coupons.products.find((item) => {
+        return item.id === parseInt(this.$route.query.product_id)
+      })
     }
   }
 }

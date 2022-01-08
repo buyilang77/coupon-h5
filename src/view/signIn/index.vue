@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="merchant-info">
-      <div v-if="false" class="merchant-info-img">
-        <img v-if="false" :src="merchant.avatar" alt="">
+      <div v-if="merchant.avatar" class="merchant-info-img">
+        <img :src="merchant.avatar" alt="">
       </div>
       <a>{{ merchant.merchant_name }}</a>
     </div>

@@ -21,6 +21,14 @@ const routes = [
     }
   },
   {
+    path: '/coupons/:id(\\d+)/electronic-card',
+    name: 'ElectronicCard',
+    component: () => import('./view/electronicCard'),
+    meta: {
+      title: '电子卡'
+    }
+  },
+  {
     path: '/coupons/:id(\\d+)/select-product',
     name: 'SelectProduct',
     component: () => import('./view/select'),

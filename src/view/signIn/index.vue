@@ -4,7 +4,12 @@
       <div v-if="merchant.avatar" class="merchant-info-img">
         <img :src="merchant.avatar" alt="">
       </div>
-      <a>{{ merchant.merchant_name }}</a>
+      <div class="merchant-info-name">
+        <a>{{ merchant.merchant_name }}</a>
+      </div>
+    </div>
+    <div class="container-title text-center">
+      <span>——</span><a>提货中心</a><span>——</span>
     </div>
     <van-row>
       <van-col span="24">
@@ -82,20 +87,32 @@ export default {
 <style lang="scss" scoped>
 .merchant-info {
   margin: 40px 20px;
-  display: flex;
-  align-items: center;
   &-img {
     width: 70px;
     height: 70px;
     border-radius: 100px;
-    margin-right: 10px;
+    margin: 0 auto;
     overflow: hidden;
     img {
       height: 70px;
     }
   }
+  &-name {
+    margin-top: 2rem;
+    text-align: center;
+  }
   a {
     font-weight: bold;
+  }
+}
+.container-title {
+  font-size: 13pt;
+  font-weight: bold;
+  a {
+    margin: 0 2rem;
+  }
+  span {
+    color: #ccc;
   }
 }
 .login-form {

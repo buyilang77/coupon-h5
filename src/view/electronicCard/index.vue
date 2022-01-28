@@ -74,7 +74,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 body {
   background-color: #363636 !important;
 }
@@ -120,6 +120,8 @@ body {
   position: fixed;
   bottom: 5vh;
   width: 100%;
+  left: 0;
+  right: 0;
   button {
     margin: 0 auto;
     width: 65px;

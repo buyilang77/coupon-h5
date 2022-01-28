@@ -85,6 +85,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+body {
+  margin: 0 auto;
+}
 .merchant-info {
   margin: 40px 20px;
   &-img {

@@ -89,10 +89,10 @@ body {
     justify-content: space-around;
     font-size: 10pt;
     margin-top: 20vh;
-    height: 220px;
+    height: 240px;
     border-radius: 10px;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     .from {
       color: #FFFFFF;
       padding: 20px 20px;

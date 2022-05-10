@@ -2,23 +2,19 @@
   <div class="container">
     <div class="merchant-info">
       <div v-if="merchant.avatar" class="merchant-info-img">
-        <img :src="merchant.avatar" alt="">
-      </div>
-      <div class="merchant-info-name">
-        <a>{{ merchant.merchant_name }}</a>
+        <img :src="require('@/assets/banner-home.jpg')" alt="">
       </div>
     </div>
-    <div class="container-title text-center">
-      <span>——</span><a>提货中心</a><span>——</span>
+    <div class="container-main">
+      <van-row>
+        <van-col span="24">
+          <van-form class="login-form">
+            <van-field v-model="postForm.code" name="code" label="卡号" placeholder="请输入卡号" :rules="[{ required: true }]" />
+            <van-field v-model="postForm.password" type="password" name="Password" label="密码" placeholder="请输入密码" :rules="[{ required: true }]" />
+          </van-form>
+        </van-col>
+      </van-row>
     </div>
-    <van-row>
-      <van-col span="24">
-        <van-form class="login-form">
-          <van-field v-model="postForm.code" name="code" label="卡号" placeholder="请输入卡号" :rules="[{ required: true }]" />
-          <van-field v-model="postForm.password" type="password" name="Password" label="密码" placeholder="请输入密码" :rules="[{ required: true }]" />
-        </van-form>
-      </van-col>
-    </van-row>
     <div class="submit">
       <van-button round block native-type="submit" @click="onSubmit">
         开始提货
@@ -89,15 +85,9 @@ body {
   margin: 0 auto;
 }
 .merchant-info {
-  margin: 40px 20px;
   &-img {
-    width: 70px;
-    height: 70px;
-    border-radius: 100px;
-    margin: 0 auto;
-    overflow: hidden;
     img {
-      height: 70px;
+      width: 100%;
     }
   }
   &-name {
@@ -107,6 +97,12 @@ body {
   a {
     font-weight: bold;
   }
+}
+.container-main {
+  margin-top: -20px;
+  background-color: #f8f8f8;
+  position: relative;
+  border-radius: 25px;
 }
 .container-title {
   font-size: 13pt;
@@ -119,7 +115,7 @@ body {
   }
 }
 .login-form {
-  margin: 20vh 20px 0;
+  margin: 10vh 20px 0;
   border-radius: 10px;
   overflow: hidden;
 }
